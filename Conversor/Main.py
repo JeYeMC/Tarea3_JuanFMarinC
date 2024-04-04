@@ -1,16 +1,26 @@
-# This is a sample Python script.
-
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from Lector import LectorCSV
+from Convertidor import Convertidor
+from Creador import CreadorArchivo
+from Verificador import VerificadorArchivo
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def principal():
+    archivo_csv = input("Por favor, ingrese la ruta completa del archivo CSV: ")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # Verificar si el archivo CSV existe
+    if not VerificadorArchivo.verificar_existencia_archivo(archivo_csv):
+        print("El archivo CSV especificado no existe.")
+        return
+
+    # Leer datos del archivo CSV
+    datos = LectorCSV.leer_datos_csv(archivo_csv)
+
+    # Convertir datos a formato JSON
+    datos_json = Convertidor.convertir_a_json(datos)
+
+    # Crear archivo JSON
+    CreadorArchivo.crear_archivo_json(datos_json, archivo_csv)
+
+
+if __name__ == "__main__":
+    principal()
